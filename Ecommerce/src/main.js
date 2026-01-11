@@ -3,6 +3,8 @@
   import authRouter from './route/auth/index.js'
   import errorMiddleware from './middleware/error.middleware.js'
   import cookieParser from 'cookie-parser'
+  import { isProtectedRoute } from './middleware/auth.js'
+ 
   const app = express()
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
@@ -17,10 +19,15 @@
   })
 
   app.use('/auth',authRouter)
+  app.use(isProtectedRoute) //aaba muni ko route ma apply hunxa
   app.get('/test',(req,res)=>{
+    console.log('User Data',req.user)
     res.send('Test Route')
   })
+  
+
   app.use(errorMiddleware)
   app.listen(3000, () => {
     console.log('Server is running at port 3000')
   })
+

@@ -26,4 +26,13 @@ const generateJWTToken=(user)=>{
     return token
 }
 
-export {encryptPassword,verifyPassword,generateJWTToken}
+const verifyToken=(token)=>{
+    try{
+        const decoded=jwt.verify(token,process.env.JWT_SERCRET)
+        return decoded
+    }catch(error){
+        return null
+    }
+}
+
+export {encryptPassword,verifyPassword,generateJWTToken,verifyToken}
