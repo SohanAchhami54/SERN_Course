@@ -1,9 +1,10 @@
   import express from 'express'
   import { sequelize } from './config/database.js'
   import authRouter from './route/auth/index.js'
+  import vendorRouter from './route/vendor/index.js'
   import errorMiddleware from './middleware/error.middleware.js'
   import cookieParser from 'cookie-parser'
-  import { isProtectedRoute } from './middleware/auth.js'
+  import { isProtectedRoute, isVendor } from './middleware/auth.js'
  
   const app = express()
   app.use(express.json())
@@ -20,11 +21,8 @@
 
   app.use('/auth',authRouter)
   app.use(isProtectedRoute) //aaba muni ko route ma apply hunxa
-  app.get('/test',(req,res)=>{
-    console.log('User Data',req.user)
-    res.send('Test Route')
-  })
   
+  app.use('/vendor',isVendor,vendorRouter)
 
   app.use(errorMiddleware)
   app.listen(3000, () => {
