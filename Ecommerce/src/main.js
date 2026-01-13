@@ -4,7 +4,8 @@
   import vendorRouter from './route/vendor/index.js'
   import errorMiddleware from './middleware/error.middleware.js'
   import cookieParser from 'cookie-parser'
-  import { isProtectedRoute, isVendor } from './middleware/auth.js'
+  import { isCustomer, isProtectedRoute, isVendor } from './middleware/auth.js'
+ import { getProductsControllerForUser, getSingleProductForCustomer } from './controller/products/index.js'
  
   const app = express()
   app.use(express.json())
@@ -20,7 +21,10 @@
   })
 
   app.use('/auth',authRouter)
-  app.use(isProtectedRoute) //aaba muni ko route ma apply hunxa
+  app.use('/products', getProductsControllerForUser)
+  app.use('/products/:id',getSingleProductForCustomer)
+  
+  app.use(isProtectedRoute) //aaba muni ko route ma apply hunxa 
   
   app.use('/vendor',isVendor,vendorRouter)
 
