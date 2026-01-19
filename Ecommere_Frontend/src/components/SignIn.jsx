@@ -28,27 +28,48 @@ const SignIn = () => {
     
   return (
     <>
-    <div >
+   <div className="flex justify-center items-center min-h-screen bg-gray-100">
+  <div className="bg-white p-8 rounded-lg shadow-md w-96">
+    <h1 className="text-center text-4xl font-bold mb-6">Sign In</h1>
 
-  
-     <h1 className='text-center p-5 text-4xl font-bold'>Sign In </h1>
-     {error && <p>Error:{error}</p>}
-     <form onSubmit={handleSubmit}
-     className='flex flex-col justify-center items-center gap-4'>
+    {error && (
+      <p className="text-red-500 text-center mb-4">Error: {error}</p>
+    )}
 
-         <input type="email" placeholder='email' value={form.email} 
-         onChange={(e)=>setForm({...form,email:e.target.value})} 
-         className='border w-80 rounded-md'/>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4"
+    >
+      {/* Email */}
+      <input
+        type="email"
+        placeholder="Email"
+        value={form.email}
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+        className="border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
 
-         <input type="password" placeholder='enter your password' value={form.password}
-         onChange={(e)=>setForm({...form,password:e.target.value})} 
-         className='border w-80 rounded-md'/>
+      {/* Password */}
+      <input
+        type="password"
+        placeholder="Enter your password"
+        value={form.password}
+        onChange={(e) => setForm({ ...form, password: e.target.value })}
+        className="border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
 
-         <button type='submit' disabled={isLoading} className='bg-red-400 text-white text-xl px-4 rounded-md'>
-           {isLoading?'Signin In.....':'SignIn'}
-         </button>
-     </form>
-       </div>
+      {/* Submit Button */}
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="bg-blue-500 text-white py-2 rounded-md text-xl hover:bg-blue-600 transition-colors mt-2"
+      >
+        {isLoading ? "Signing In..." : "Sign In"}
+      </button>
+    </form>
+  </div>
+</div>
+
     </>
   )
 }

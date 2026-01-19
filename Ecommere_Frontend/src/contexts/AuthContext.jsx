@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { Signin } from "../services/auth.js";
+import { Signin, SignUpApi } from "../services/auth.js";
 import { useEffect } from "react";
 
 const AuthContext=createContext()
@@ -19,12 +19,16 @@ export const AuthProvider=({children})=>{
         console.log('data of the user is:',data)
          return data
     }
+    const SignUp=async(userData)=>{
+        const data=await SignUpApi(userData)
+        return data 
+    }
     const logout=()=>{
         setUser('')
         localStorage.removeItem('user')
     }
     return (
-    <AuthContext.Provider value={{user,login,logout}} >
+    <AuthContext.Provider value={{user,login,logout,SignUp}} >
      {children}
     </AuthContext.Provider>
     )
