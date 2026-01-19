@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import {getProductList} from '../services/productApi.js'
+import ProductListC from '../components/ProductListC.jsx'
+import Navbar from '../components/Layout/Navbar.jsx'
 const ProductList = () => {
   const [product, setProduct] = useState([])
   const [loading,setLoading]=useState(true)
@@ -9,9 +11,9 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts=async ()=>{
       try{
-      const data= await getProductList()
-         console.log('productdata:',data)
-      setProduct(data)
+      const result= await getProductList()
+      console.log('productdata:',result)
+      setProduct(result.data)
     }catch(error){
       setError(error.message)
     }finally {
@@ -20,6 +22,7 @@ const ProductList = () => {
     }
     fetchProducts()
   }, [])
+
 if(loading) return <div> Loading...</div>
 
   if (error) return <div>Error:{error}</div>
@@ -27,7 +30,15 @@ if(loading) return <div> Loading...</div>
 
   return (
     <div>
-      <h1>ProductList</h1>
+      <ul className='mx-auto container grid grid-cols-1   sm:grid-cols-2 gap-3 md:grid-cols-3'>
+        {
+          product.map((product)=>{
+            return <li key={product.id}>
+              <ProductListC product={product}/>
+            </li>
+          })
+        }
+      </ul>
     </div>
   )
 }
